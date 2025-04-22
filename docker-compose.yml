@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  elasticsearch:
+    image: dockermartian/ir_es1:latest
+    container_name: ir_es1
+    ports:
+      - "9200:9200"
+    networks:
+      - elastic
+    deploy:
+      resources:
+        limits:
+          memory: 1GB
+
+  semantic_search:
+    image: dockermartian/ir_semanticsearch:latest
+    container_name: ir_semanticsearch
+    ports:
+      - "8010:8010"
+    networks:
+      - elastic
+
+  crossencoder:
+    image: dockermartian/ir_crossencoder:latest
+    container_name: ir_crossencoder
+    ports:
+      - "8050:8050"
+    networks:
+      - elastic
+
+  selective_crossencoder:
+    image: dockermartian/ir_selectivecrossencoder:latest
+    container_name: ir_selective_crossencoder
+    ports:
+      - "8070:8070"
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge
